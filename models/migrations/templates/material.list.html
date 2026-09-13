@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Матеріали</title>
+</head>
+<body>
+    <h1>Матеріали</h1>
+    <ul>
+        {% for material in materials %}
+            <li>
+                <h2>{{ material.title }}</h2>
+                <p>{{ material.description }}</p>
+                {% if material.file %}
+                    <a href="{{ material.file.url }}" target="_blank">Завантажити файл</a>
+                {% endif %}
+                {% if material.you_tube_link %}
+                    <a href="{{ material.you_tube_link }}" target="_blank">Дивитися на YouTube</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
