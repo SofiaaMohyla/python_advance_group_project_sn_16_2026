@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+Список подій
+{% endblock %}
+
+{% block content %}
+<h2>Список подій</h2>
+<a href="{% url '' %}" type="button" class="btn btn-outline-success">Створити подію</a>
+
+<div class="d-flex align-items-end gap-2 mb-3">
+    <a href="{% url '' %}" class="btn btn-outline-success">
+        Створити подію
+    </a>
+
+    
+</div>
+
+{% for event in events %}
+    <div class="list-group my-2">
+      <a href="{% url '' event.pk %}" class="list-group-item list-group-item-action">{{ event.title }}
+      <span class="badge rounded-pill text-bg-primary">{{ event.date }}</span>
+      </a>
+    </div>
+{% endfor %}
+{% endblock %}
