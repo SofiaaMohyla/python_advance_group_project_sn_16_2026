@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Матеріали{% endblock %}
+
+{% block content %}
+<h1>Матеріали</h1>
+
+{% if materials %}
+    <div class="list-group">
+        {% for material in materials %}
+            <article class="list-group-item">
+                <h2 class="h5">{{ material.title }}</h2>
+                <p>{{ material.description }}</p>
+                {% if material.file %}
+                    <a href="{{ material.file.url }}">Завантажити файл</a>
+                {% endif %}
+                {% if material.you_tube_link %}
+                    <a href="{{ material.you_tube_link }}">YouTube</a>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Матеріалів поки немає.</p>
+{% endif %}
+{% endblock %}
