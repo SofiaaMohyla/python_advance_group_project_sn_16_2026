@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% block title%}
+Деталі портфоліо
+{% endblock title%}
+{% block content %}
+<h2>Деталі</h2>
+<a href="{% url '#' %}" class="btn btn-outline-primary">Назад</a>
+<a href="{% url 'portfolio-update' portfolio.pk %}" class="btn btn-outline-success">Редагувати</a>
+<a href="{% url 'portfolio-delete' portfolio.pk %}" class="btn btn-outline-danger">Видалити</a>
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ portfolio.title }}</h5>
+        <p class="card-text">{{ portfolio.description }}</p>
+        <p class="card-text"><strong>Статус:</strong> {{ portfolio.get_status_display }}</p>
+        <p class="card-text"><strong>Пріоритет:</strong> {{ portfolio.get_priority_display }}</p>
+        {% if portfolio.media.name|lower|slice:"-4:" == ".jpg" or portfolio.media.name|lower|slice:"-5:" == ".webp" %}
+          <img src="{{ portfolio.media.url }}" alt="Portfolio Media">
+        {%else%}
+          <p> Медіа нема або іншого формату!</p>
+        {% endif %}
+    </div>
+</div>
+<h2 class="mt-3">Коментарі</h2>
+<a type="button" href="{% url 'comment-create' portfolio.pk %}" class="btn btn-outline-success">Додати коментар</a>
+{% for comment in comments %}
+<div class="card">
+  <div class="card-body">
+    <figure>
+      <blockquote class="blockquote">
+        <p>{{ comment.content }}</p>
+      </blockquote>
+      {% if comment.media.name|lower|slice:"-4:" == ".jpg" or comment.media.name|lower|slice:"-5:" == ".webp" %}
+        <img src="{{ comment.media.url }}" alt="Comment Media">
+      {%else%}
+        <p> Медіа нема або іншого формату!</p>
+      {% endif %}
+      <figcaption class="blockquote-footer">
+        Автор: {{comment.author.first_name}} {{comment.author.last_name}} 
+      </figcaption>
+      <figcaption class="blockquote-footer">
+        Дата: {{comment.created_at}}
+        </figcaption>
+    </figure>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
