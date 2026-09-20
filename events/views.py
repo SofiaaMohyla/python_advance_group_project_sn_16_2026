@@ -31,7 +31,7 @@ class EventUpdateView(UpdateView):
 class EventDetailView(DetailView):
     model = Event
     context_object_name = 'event'
-    template_name = 'event/detail.html'
+    template_name = 'events/detail.html'
 
 
 class EventDeleteView(DeleteView):
