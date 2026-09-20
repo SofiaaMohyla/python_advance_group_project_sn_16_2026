@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Редагування медіа{% else %}Додавання медіа{% endif %}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% if object %}Редагування медіа{% else %}Додавання медіа{% endif %}</h2>
+<form method="post" enctype="multipart/form-data" class="p-4 border rounded bg-light shadow-sm">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <div class="mb-3">
+            {{ field.label_tag }}
+            {{ field }}
+            {% for error in field.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Зберегти</button>
+    <a href="{% url 'media_item_list' %}" class="btn btn-secondary">Скасувати</a>
+</form>
+{% endblock %}

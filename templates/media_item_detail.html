@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>{{ object.title }}</h2>
+    <div>
+        {% if object.uploaded_by == user %}
+            <a href="{% url 'media_item_update' object.pk %}" class="btn btn-outline-primary">Редагувати</a>
+        {% endif %}
+        {% if object.uploaded_by == user or user.role == 'admin' or user.is_staff %}
+            <a href="{% url 'media_item_delete' object.pk %}" class="btn btn-outline-danger">Видалити</a>
+        {% endif %}
+        <a href="{% url 'media_item_list' %}" class="btn btn-secondary">До галереї</a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        {% if object.media_type == 'image' %}
+            <img src="{{ object.file.url }}" class="img-fluid rounded" alt="{{ object.title }}">
+        {% elif object.media_type == 'video' %}
+            <video controls class="w-100"><source src="{{ object.file.url }}">Ваш браузер не підтримує відео.</video>
+        {% elif object.media_type == 'audio' %}
+            <audio controls class="w-100"><source src="{{ object.file.url }}">Ваш браузер не підтримує аудіо.</audio>
+        {% endif %}
+        <p class="text-muted mt-3">Тип: {{ object.get_media_type_display }}</p>
+        <a href="{{ object.file.url }}" target="_blank" class="btn btn-primary">Відкрити файл</a>
+    </div>
+</div>
+
+<section class="mt-4">
+    <h3>Коментарі</h3>
+    <form method="post" action="{% url 'comment_create' object.pk %}" class="mb-4">
+        {% csrf_token %}
+        {{ comment_form.content.label_tag }}
+        {{ comment_form.content }}
+        {% for error in comment_form.content.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary mt-2">Додати коментар</button>
+    </form>
+
+    {% for comment in comments %}
+        <div class="border rounded p-3 mb-2">
+            <strong>{{ comment.author.username }}</strong>
+            <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+            <p class="mb-0 mt-2">{{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p class="text-muted">Коментарів ще немає.</p>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Видалення медіа{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2>Видалити «{{ object.title }}»?</h2>
+        <p class="text-muted">Цю дію неможливо скасувати.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Так, видалити</button>
+            <a href="{% url 'media_item_detail' object.pk %}" class="btn btn-secondary">Скасувати</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
