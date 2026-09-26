@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Голосування{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2 mb-0">Голосування</h1>
+    {% if user.is_superuser or user.role == "admin" or user.role == "moderator" %}
+        <a class="btn btn-primary" href="{% url 'voting:create' %}">Створити голосування</a>
+    {% endif %}
+</div>
+
+{% for poll in polls %}
+    <article class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between gap-3">
+                <h2 class="h4"><a href="{% url 'voting:detail' poll.pk %}" class="text-decoration-none">{{ poll.title }}</a></h2>
+                {% if poll.is_active %}<span class="badge text-bg-success align-self-start">Активне</span>{% else %}<span class="badge text-bg-secondary align-self-start">Завершене</span>{% endif %}
+            </div>
+            {% if poll.description %}<p class="mb-2">{{ poll.description|truncatechars:180 }}</p>{% endif %}
+            <small class="text-muted">Створено: {{ poll.created_at|date:"d.m.Y H:i" }} · голосів: {{ poll.votes.count }}</small>
+        </div>
+    </article>
+{% empty %}
+    <p class="text-muted">Голосувань ще немає.</p>
+{% endfor %}
+{% endblock %}
