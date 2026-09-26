@@ -3,11 +3,22 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView, D
 from events.models import Event
 from django.urls import reverse_lazy, reverse
 from events.forms import EventForm
+from django.core.paginator import Paginator
+
+
+def index(request):
+    events = Event.objects.all().order_by('-created_at')
+    paginator = Paginator(events, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'events/list.html', {'events': events, 'page_obj': page_obj})
 
 class EventListView(ListView):
     model = Event
     context_object_name = 'events'
     template_name = 'events/list.html'
+    paginate_by = 3
 
 
 class EventCreateView(CreateView):

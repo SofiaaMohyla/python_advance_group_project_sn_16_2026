@@ -24,4 +24,23 @@
       </a>
     </div>
 {% endfor %}
+
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% for page_num in page_obj.paginator.page_range %}
+            {% if page_obj.number != page_num %}
+            <li class="page-item" aria-current="page">
+            {% else %}
+            <li class="page-item activate" aria-current="page">
+            {% endif%}
+                <a class="page-link" href="?page={{ page_num}}" class="page-link">{{ page_num }}</a>
+            </li>
+            {% endfor%}
+        </ul>
+        </nav>
+    </div>
+</div>
+
 {% endblock %}
