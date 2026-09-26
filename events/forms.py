@@ -4,14 +4,15 @@ from events.models import Event
 class EventForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['title', 'description', 'date', 'creator']
+    fields = ['title', 'description', 'time','date', 'place', 'type', 'creator']
 
     widgets = {
       'title': forms.TextInput(attrs={'class': 'form-control'}),
       'description': forms.Textarea(attrs={'class': 'form-control'}),
+      'time': forms.TimeInput(format='%H:%M', attrs={'class': 'form-control', 'type': 'time'}),
       'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-      'type': forms.Select(attrs={'class': 'form-control'}),
       'place': forms.TextInput(attrs={'class': 'form-control'}),
+      'type': forms.Select(attrs={'class': 'form-control'}),
     }
 
 
@@ -20,5 +21,5 @@ class EventFilterForm(forms.Form):
 
   class Meta:
     widgets = {
-      'ензу': forms.Select(attrs={'class': 'form-control', 'required': False}),
+      'type': forms.Select(attrs={'class': 'form-control', 'required': False}),
     }

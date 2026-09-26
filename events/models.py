@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 from django.conf import settings
 
 class Event(models.Model):
@@ -11,6 +12,7 @@ class Event(models.Model):
 
     title = models.CharField(max_length=150, verbose_name='Назва')
     description = models.TextField(verbose_name="Опис")
+    time = models.TimeField(verbose_name="Час проведення")
     date = models.DateField(blank=True, null=True, verbose_name="Дата проведення")
     place = models.CharField(max_length=300, verbose_name='Місце проведення')
     type = models.CharField(max_length=15, choices=TYPE_CHOICES, verbose_name="Тип події")
