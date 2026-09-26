@@ -4,7 +4,7 @@
 {% endblock title%}
 {% block content %}
 <h2>Деталі</h2>
-<a href="{% url '#' %}" class="btn btn-outline-primary">Назад</a>
+<a href="{% url 'portfolio-list' %}" class="btn btn-outline-primary">Назад</a>
 <a href="{% url 'portfolio-update' portfolio.pk %}" class="btn btn-outline-success">Редагувати</a>
 <a href="{% url 'portfolio-delete' portfolio.pk %}" class="btn btn-outline-danger">Видалити</a>
 <div class="card mt-3">
@@ -29,7 +29,7 @@
       <blockquote class="blockquote">
         <p>{{ comment.content }}</p>
       </blockquote>
-      {% if comment.media.name|lower|slice:"-4:" == ".jpg" or comment.media.name|lower|slice:"-5:" == ".webp" %}
+      {% if comment.media.name|lower|slice:"-4:" == ".jpg" or comment.media.name|lower|slice:"-5:" == ".webp" or comment.media.name|lower|slice:"-4:" == ".png" %}
         <img src="{{ comment.media.url }}" alt="Comment Media">
       {%else%}
         <p> Медіа нема або іншого формату!</p>

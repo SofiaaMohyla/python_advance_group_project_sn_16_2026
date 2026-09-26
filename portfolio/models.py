@@ -5,9 +5,16 @@ from authentication.models import CustomUser
 
 
 class Portfolio(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='portfolio')
+    
+    CREATED_TIME_CHOICES = [
+        ('Newest', 'Найновіші'),
+        ('Oldest', 'Найстаріші'),
+    ]
+    
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='portfolio')
     title = models.CharField(max_length=100, default='Моє портфоліо', verbose_name='Назва портфоліо')
     description = models.TextField(blank=True, verbose_name='Опис портфоліо')
+    created_time = models.CharField(max_length=10, choices=CREATED_TIME_CHOICES, default='Newest', verbose_name='Сортування за часом створення')
     media = models.FileField(upload_to='portfolio/', blank=True, null=True, verbose_name='Медіа')
     
     created_at = models.DateTimeField(auto_now_add=True)

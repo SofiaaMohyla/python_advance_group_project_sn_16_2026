@@ -11,7 +11,15 @@ class PortfolioForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Опис портфоліо'}),
             'media': forms.FileInput(attrs={'class': 'form-control'})
         }
-        
+
+class PortfFilterForm(forms.Form):
+    SORT_CHOICES = [
+        ('Newest', 'Найновіші'),
+        ('Oldest', 'Найстаріші'),
+    ]
+    
+    sort_by = forms.ChoiceField(choices=SORT_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-control'}))
+
 class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments

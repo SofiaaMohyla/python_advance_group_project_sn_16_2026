@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% block title%}
+Всі Портфоліо
+{% endblock title%}
+{% block content %}
+<h2>Список Портфоліо</h2>
+<div class="d-flex align-items-end gap-2 mb-3">
+    <a href="{% url 'portfolio-create' %}" class="btn btn-outline-success">
+        Створити Портфоліо
+    </a>
+    <form method="GET" class="d-flex align-items-end gap-2">
+        <label for="sort_by" class="form-label mb-0">Сортувати за:</label>
+        <select name="sort_by" id="sort_by" class="form-select">
+            <option value="">Виберіть</option>
+            <option value="Newest" {% if request.GET.sort_by == 'Newest' %}selected{% endif %}>Найновіші</option>
+            <option value="Oldest" {% if request.GET.sort_by == 'Oldest' %}selected{% endif %}>Найстаріші</option>
+        </select>
+        <button type="submit" class="btn btn-outline-primary">Сортувати</button>
+</div>
+{% for portfolio in portfolios %}
+    <div class="list-group mt-3">
+        <a href="{% url 'portfolio-detail' portfolio.pk %}" class="list-group-item list-group-item-action">{{ portfolio.title }}
+        <span class="badge bg-secondary float-end">{{ portfolio.get_created_time_display }}</span>
+    </a>
+    </div>
+{% endfor %}
+{% endblock %}
