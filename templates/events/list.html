@@ -5,7 +5,9 @@
 <h2>Список подій</h2>
 
 <div class="d-flex align-items-end gap-2 mb-3">
+    {% if user.is_authenticated %}
     <a href="{% url 'event-create' %}" type="button" class="btn btn-outline-success">Створити подію</a>
+    {% endif%}
 
     <form method="GET" class="d-flex align-items-end gap-2">
         {{ filter_form.as_p }}
@@ -20,7 +22,9 @@
     <div class="list-group my-2">
       <a href="{% url 'event-detail' event.pk %}" class="list-group-item list-group-item-action">{{ event.title }}
       <span class="badge rounded-pill text-bg-primary">{{ event.date }}</span>
+      {% if user.is_authenticated %}
       <a href="{% url 'event-delete' event.pk %}" class="btn btn-secondary">Видалити</a>
+      {% endif %}
       </a>
     </div>
 {% endfor %}
