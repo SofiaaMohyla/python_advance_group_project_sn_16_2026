@@ -26,6 +26,7 @@ from models.views import MaterialDetailView, MaterialListView, material_add
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('portfolio/', include("portfolio.urls")),
     path('', include('Gallery.urls')),
     path('', include('authentication.urls')),
@@ -35,9 +36,11 @@ urlpatterns = [
     path('materials/', MaterialListView.as_view(), name='materials'),
     path('materials/<int:pk>/', MaterialDetailView.as_view(), name='material_detail'),
     path('materials/add/', material_add, name='material_add'),
+    path('ads/', include("ads.urls")),
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 
 

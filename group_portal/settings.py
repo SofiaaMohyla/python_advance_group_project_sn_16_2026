@@ -39,11 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
 
+
     'Gallery',
     'portfolio',
     'events',
 
-    'models'
+    'models',
+
+
+    'ads',
 
 ]
 
@@ -138,6 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
+
 LOGIN_REDIRECT_URL = '/profile/'
 LOGIN_URL = '/login/'
 
@@ -146,4 +151,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
+
+
+LOGIN_REDIRECT_URL = '/ads/'
 

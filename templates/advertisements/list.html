@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Оголошення{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Оголошення</h1>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'advertisement_create' %}" class="btn btn-primary mb-4">
+        Додати оголошення
+    </a>
+{% endif %}
+
+{% for advertisement in advertisements %}
+
+<div class="card mb-3">
+    <div class="card-body">
+
+        <h3 class="card-title">
+            {{ advertisement.title }}
+        </h3>
+
+        <p class="card-text">
+            {{ advertisement.description }}
+        </p>
+
+        <p class="text-muted mb-3">
+            Автор: {{ advertisement.author }}<br>
+            Дата: {{ advertisement.created_at|date:"d.m.Y H:i" }}
+        </p>
+
+        <!-- Кнопки показуються, якщо користувач: адмін, модератор АБО автор цього оголошення -->
+        {% if user.is_staff or user.groups.all|join:", "|lower == "moderators" or user == advertisement.author %}
+
+            <div class="d-flex gap-2">
+                <!-- Кнопка Редагувати -->
+                <a href="{% url 'advertisement_edit' advertisement.pk %}"
+                   class="btn btn-warning btn-sm">
+                    Редагувати
+                </a>
+
+                <!-- Кнопка Видалити -->
+                <form method="post"
+                      action="{% url 'advertisement_delete' advertisement.pk %}"
+                      class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Ви впевнені, що хочете видалити це оголошення?');">
+                        Видалити
+                    </button>
+                </form>
+            </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{% empty %}
+
+<p>Оголошень поки немає.</p>
+
+{% endfor %}
+
+{% endblock %}
