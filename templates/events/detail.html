@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}{{ event.title }} інфо {% endblock %}
+
+
+{% block content %}
+
+<h2>Детальніше про подію: {{ event.title }}</h2>
+
+<ul class="list-group list-group-flush mt-2">
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Опис:
+        <p class="mb-0">{{ event.description }}</p>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Час проведення:
+        <span class="badge text-bg-primary rounded-pill">
+            {{ event.time }}
+        </span>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Дата проведення:
+        <span class="badge text-bg-primary rounded-pill">
+            {{ event.date }}
+        </span>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Місце проведення:
+        <span class="badge text-bg-primary rounded-pill">
+            {{ event.place }}
+        </span>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Тип події:
+        <span class="badge text-bg-primary rounded-pill">
+            {{ event.type }}
+        </span>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        Організатор(-и):
+        <span class="badge text-bg-primary rounded-pill">
+            {{ event.creator }}
+        </span>
+    </li>
+
+{% endblock %}

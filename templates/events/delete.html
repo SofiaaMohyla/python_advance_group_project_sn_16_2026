@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Видалення події {{ event.title }}
+{% endblock %}
+
+
+{% block content %}
+<h3>Ви впевнені, що хочете видалити подію {{ event.title }}?</h3>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-success">Видалити</button>
+    <a href="{% url 'event-detail' event.id %}" class="btn btn-secondary">Ні, повернутися назад</a>
+  </form>
+</div>
+{% endblock %}
