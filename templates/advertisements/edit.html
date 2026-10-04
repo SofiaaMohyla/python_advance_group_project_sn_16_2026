@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Редагування оголошення{% endblock %}
+
+{% block content %}
+
+<h1>Редагування оголошення</h1>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Заголовок</label>
+
+        <input type="text"
+               name="title"
+               class="form-control"
+               maxlength="200"
+               value="{{ advertisement.title }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Опис</label>
+
+        <textarea name="description"
+                  class="form-control"
+                  rows="5"
+                  required>{{ advertisement.description }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Зберегти
+    </button>
+
+    <a href="{% url 'advertisement_list' %}"
+       class="btn btn-secondary">
+        Скасувати
+    </a>
+
+</form>
+
+{% endblock %}c

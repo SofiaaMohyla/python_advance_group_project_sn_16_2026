@@ -1,55 +1,62 @@
 {% extends 'base.html' %}
 
 {% block title %}Редагування профілю{% endblock %}
-{% load custom_filters %}
+
 {% block content %}
-<div class="container">
-    <h2 class="text-center my-4">Редагування профілю</h2>
 
-    <form method="post" class="p-4 border rounded bg-light shadow-sm">
-        {% csrf_token %}
-        <!-- Виведення помилок -->
-        {% if form.errors %}
-            <div class="alert alert-danger">
-                <strong>Помилка!</strong> Перевірте дані та спробуйте ще раз.
-                <ul>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        
+        <!-- Кнопка повернення до оголошень -->
+        <a href="{% url 'advertisement_list' %}" class="btn btn-outline-secondary mb-3">
+            ← Назад до оголошень
+        </a>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4 text-center">Редагування профілю</h2>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Виведення загальних помилок форми -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Ручний вивід полів форми з класами Bootstrap -->
                     {% for field in form %}
-                        {% for error in field.errors %}
-                            <li>{{ field.label }}: {{ error }}</li>
-                        {% endfor %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            
+                            <!-- Додаємо клас form-control до самого інпуту -->
+                            {{ field }}
+
+                            <!-- Виведення помилок для окремого поля -->
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ field.errors0 }}
+                                </div>
+                            {% endif %}
+
+                            <!-- Підказка до поля (якщо вона є) -->
+                            {% if field.help_text %}
+                                <div class="form-text text-muted small">{{ field.help_text }}</div>
+                            {% endif %}
+                        </div>
                     {% endfor %}
-                </ul>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+                    </div>
+                </form>
+
             </div>
-        {% endif %}
-
-        <!-- Поля форми -->
-        <div class="mb-3">
-            <label for="username" class="form-label">Ім'я користувача</label>
-            {{ form.username|add_class:"form-control" }}
         </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            {{ form.email|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="first_name" class="form-label">Ім'я</label>
-            {{ form.first_name|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="last_name" class="form-label">Прізвище</label>
-            {{ form.last_name|add_class:"form-control" }}
-        </div>
-
-        <!-- Кнопка для збереження -->
-        <button type="submit" class="btn btn-primary w-100">Зберегти</button>
-    </form>
-
-    <!-- Повернення до профілю -->
-    <div class="text-center mt-3">
-        <a href="{% url 'profile' %}" class="btn btn-secondary">Назад до профілю</a>
     </div>
 </div>
+
 {% endblock %}
