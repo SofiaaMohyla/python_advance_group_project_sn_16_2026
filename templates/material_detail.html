@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ material.title }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <h1 class="mb-3">{{ material.title }}</h1>
+        <p class="text-muted mb-4">{{ material.description|default:"Опис відсутній."|linebreaksbr }}</p>
+
+        {% if material.image %}
+            <img class="img-fluid rounded mb-4" src="{{ material.image.url }}" alt="{{ material.title }}" loading="lazy">
+        {% endif %}
+
+        {% if material.file %}
+            <a class="btn btn-primary me-2 mb-2" href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer">
+                Завантажити файл
+            </a>
+        {% endif %}
+
+        {% if material.you_tube_link %}
+            <a class="btn btn-danger mb-2" href="{{ material.you_tube_link }}" target="_blank" rel="noopener noreferrer">
+                YouTube
+            </a>
+        {% endif %}
+
+        {% if youtube_embed_url %}
+            <div class="ratio ratio-16x9 mt-3" style="max-width: 900px;">
+                <iframe src="{{ youtube_embed_url }}" title="YouTube video: {{ material.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{% url 'material_list' %}" class="btn btn-outline-secondary">← Повернутися до списку</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

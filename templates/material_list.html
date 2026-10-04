@@ -3,24 +3,35 @@
 {% block title %}Матеріали{% endblock %}
 
 {% block content %}
-<h1>Матеріали</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Матеріали</h1>
+    <a href="{% url 'material_add' %}" class="btn btn-success">Додати матеріал</a>
+</div>
 
 {% if materials %}
-    <div class="list-group">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         {% for material in materials %}
-            <article class="list-group-item">
-                <h2 class="h5">{{ material.title }}</h2>
-                <p>{{ material.description }}</p>
-                {% if material.file %}
-                    <a href="{{ material.file.url }}">Завантажити файл</a>
-                {% endif %}
-                {% if material.you_tube_link %}
-                    <a href="{{ material.you_tube_link }}">YouTube</a>
-                {% endif %}
-            </article>
+            <div class="col">
+                <article class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <span class="badge bg-primary-subtle text-primary-emphasis mb-3">Матеріал</span>
+                        <h2 class="card-title h5 mb-3">{{ material.title }}</h2>
+                        <p class="card-text text-muted mb-0">
+                            {{ material.description|default:"Опис відсутній."|truncatechars:15 }}
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0 d-flex flex-wrap gap-2">
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'material_detail' material.pk %}">
+                            Переглянути деталі
+                        </a>
+                    </div>
+                </article>
+            </div>
         {% endfor %}
     </div>
 {% else %}
-    <p>Матеріалів поки немає.</p>
+    <div class="alert alert-info" role="alert">
+        Матеріалів поки немає.
+    </div>
 {% endif %}
 {% endblock %}

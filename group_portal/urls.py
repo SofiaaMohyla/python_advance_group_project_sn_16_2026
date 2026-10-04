@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from models.views import material_list
+from django.conf import settings
+from django.conf.urls.static import static
+from models.views import MaterialDetailView, MaterialListView, material_add
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', material_list, name='material_list'),
-    path('materials/', material_list, name='materials'),
+    path('', MaterialListView.as_view(), name='material_list'),
+    path('materials/', MaterialListView.as_view(), name='materials'),
+    path('materials/<int:pk>/', MaterialDetailView.as_view(), name='material_detail'),
+    path('materials/add/', material_add, name='material_add'),
     path('authentication/', include("authentication.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
