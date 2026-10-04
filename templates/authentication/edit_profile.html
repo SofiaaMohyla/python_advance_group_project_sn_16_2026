@@ -6,8 +6,6 @@
 
 <div class="row justify-content-center">
     <div class="col-md-6">
-        
-        <!-- Кнопка повернення до оголошень -->
         <a href="{% url 'advertisement_list' %}" class="btn btn-outline-secondary mb-3">
             ← Назад до оголошень
         </a>
@@ -26,18 +24,16 @@
                         </div>
                     {% endif %}
 
-                    <!-- Ручний вивід полів форми з класами Bootstrap -->
                     {% for field in form %}
                         <div class="mb-3">
                             <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                             
-                            <!-- Додаємо клас form-control до самого інпуту -->
                             {{ field }}
 
                             <!-- Виведення помилок для окремого поля -->
                             {% if field.errors %}
                                 <div class="text-danger small mt-1">
-                                    {{ field.errors0 }}
+                                    {{ field.errors }}
                                 </div>
                             {% endif %}
 
@@ -55,26 +51,6 @@
 
             </div>
         </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            {{ form.email|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="first_name" class="form-label">Ім'я</label>
-            {{ form.first_name|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="last_name" class="form-label">Прізвище</label>
-            {{ form.last_name|add_class:"form-control" }}
-        </div>
-
-        <!-- Кнопка для збереження -->
-        <button type="submit" class="btn btn-primary w-100">Зберегти</button>
-    </form>
-
 
     </div>
 
