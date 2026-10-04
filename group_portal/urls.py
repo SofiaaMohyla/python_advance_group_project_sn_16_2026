@@ -20,6 +20,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
+from django.conf.urls.static import static
+from models.views import MaterialDetailView, MaterialListView, material_add
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +30,15 @@ urlpatterns = [
     path('', include('Gallery.urls')),
     path('', include('authentication.urls')),
     path('events/', include("events.urls")),
+
+    path('', MaterialListView.as_view(), name='material_list'),
+    path('materials/', MaterialListView.as_view(), name='materials'),
+    path('materials/<int:pk>/', MaterialDetailView.as_view(), name='material_detail'),
+    path('materials/add/', material_add, name='material_add'),
+    
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 
 
